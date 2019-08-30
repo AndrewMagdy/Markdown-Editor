@@ -11,21 +11,30 @@ function App() {
 
   const defaultInput = "# This is a header\n\nAnd this is a paragraph";
   const [input, setInput] = useState(defaultInput);
+  const [didScroll, setDidScroll] = useState(false);
 
   return (
     <React.Fragment>
       <AppTopBar editorRef={editorRef} />
       <Grid container>
-        <Grid item xs>
+        <Grid item xs={6}>
           <Editor
             ref={editorRef}
             input={input}
             setInput={setInput}
             previewRef={previewRef}
+            didScroll={didScroll}
+            setDidScroll={setDidScroll}
           />
         </Grid>
-        <Grid item xs>
-          <Preview ref={previewRef} input={input} editorRef={editorRef} />
+        <Grid item xs={6}>
+          <Preview
+            ref={previewRef}
+            input={input}
+            editorRef={editorRef}
+            didScroll={didScroll}
+            setDidScroll={setDidScroll}
+          />
         </Grid>
       </Grid>
     </React.Fragment>
