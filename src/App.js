@@ -1,25 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef } from "react";
+import { Grid } from "@material-ui/core/";
+
+import Editor from "./components/Editor";
+import Preview from "./components/Preview";
+import AppTopBar from "./components/AppTopBar";
 
 function App() {
+  const editorRef = useRef(null);
+  const previewRef = useRef(null);
+
+  const defaultInput = "# This is a header\n\nAnd this is a paragraph";
+  const [input, setInput] = useState(defaultInput);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <AppTopBar editorRef={editorRef} />
+      <Grid container>
+        <Grid item xs>
+          <Editor
+            ref={editorRef}
+            input={input}
+            setInput={setInput}
+            previewRef={previewRef}
+          />
+        </Grid>
+        <Grid item xs>
+          <Preview ref={previewRef} input={input} editorRef={editorRef} />
+        </Grid>
+      </Grid>
+    </React.Fragment>
   );
 }
 
