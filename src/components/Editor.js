@@ -1,34 +1,49 @@
 import React from "react";
 import AceEditor from "react-ace";
-
+import { debounce } from "lodash";
 import "brace/mode/markdown";
 import "brace/theme/monokai";
 import "brace/ext/searchbox";
 import "brace/ext/language_tools";
 
 const Editor = React.forwardRef(({ input, setInput, previewRef }, ref) => {
-  const handleScroll = e => {
-    const lineNum = ref.current.editor.getFirstVisibleRow();
+  // Get First Non Empty Line in visible text
+  const getFirstVisibleLine = () => {
+    const firstVisibleLine = ref.current.editor.getFirstVisibleRow();
+    const lastVisibleLine = ref.current.editor.getLastVisibleRow();
+    let lineNum = firstVisibleLine;
+
+    for (let i = firstVisibleLine; i <= lastVisibleLine; ++i) {
+      const line = ref.current.editor.env.document.getLine(i);
+      if (line !== "") {
+        lineNum = i + 1; // Preview lines start from 1 not 0
+        break;
+      }
+    }
+    return lineNum;
+  };
+
+  // TODO add maping data structure to improve performance
+  const handleScroll = debounce(e => {
+    const currLineNum = getFirstVisibleLine();
 
     const allNodes = document.querySelectorAll("[data-sourcepos]");
     for (const node of allNodes) {
       const sourcePos = node.getAttribute("data-sourcepos");
       const firstDoubleDotIdx = sourcePos.indexOf(":");
       const startLineNum = parseInt(sourcePos.slice(0, firstDoubleDotIdx));
-
       const secondDoubleDotIdx = sourcePos.indexOf(":", firstDoubleDotIdx + 1);
       const dashIdx = sourcePos.indexOf("-");
-
       const endLineNum = parseInt(
         sourcePos.slice(dashIdx + 1, secondDoubleDotIdx)
       );
-      if (lineNum >= startLineNum && lineNum <= endLineNum) {
-        console.log(startLineNum, endLineNum, lineNum, node);
-        previewRef.current.scroll(0, node.getBoundingClientRect().top);
+
+      if (currLineNum >= startLineNum && currLineNum <= endLineNum) {
+        node.scrollIntoView({ behavior: "smooth" });
         break;
       }
     }
-  };
+  }, 500);
 
   const handleChange = newValue => {
     setInput(newValue);
