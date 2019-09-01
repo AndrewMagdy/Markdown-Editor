@@ -6,16 +6,15 @@ import Preview from "./components/Preview";
 import AppTopBar from "./components/AppTopBar";
 
 function App() {
-  const editorRef = useRef(null);
-  const previewRef = useRef(null);
-
   const defaultInput = "# This is a header\n\nAnd this is a paragraph";
   const [input, setInput] = useState(defaultInput);
   const [didScroll, setDidScroll] = useState(false);
+  const editorRef = useRef(null);
+  const previewRef = useRef(null);
 
   return (
     <React.Fragment>
-      <AppTopBar editorRef={editorRef} />
+      <AppTopBar editorRef={editorRef} setInput={setInput} />
       <Grid container>
         <Grid item xs={6}>
           <Editor

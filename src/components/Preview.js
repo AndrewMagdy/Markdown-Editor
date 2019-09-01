@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { makeStyles } from "@material-ui/core/styles";
 import { debounce } from "lodash";
 import { parseSourcePos } from "../utils/parseSourcePos";
+import PrismCodeHighlight from "./PrismCodeHighlight";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -36,7 +37,12 @@ const Preview = React.forwardRef(
     return (
       <React.Fragment>
         <div className={classes.container} ref={ref} onScroll={handleScroll}>
-          <ReactMarkdown source={input} sourcePos rawSourcePos />
+          <ReactMarkdown
+            source={input}
+            sourcePos
+            rawSourcePos
+            renderers={{ code: PrismCodeHighlight }}
+          />
         </div>
       </React.Fragment>
     );
