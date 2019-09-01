@@ -21,7 +21,11 @@ import StrikeThroughIcon from "@material-ui/icons/StrikethroughS";
 import InsertLinkIcon from "@material-ui/icons/InsertLink";
 import InsertImageIcon from "@material-ui/icons/AddPhotoAlternate";
 
-import { markdownSample1, markdownSample2 } from "../assets/markdownSamples";
+import {
+  markdownSample1,
+  markdownSample2,
+  markdownSample3
+} from "../assets/markdownSamples";
 
 const useStyles = makeStyles(theme => ({
   menuButton: {
@@ -125,14 +129,6 @@ const AppTopBar = ({ editorRef, setInput }) => {
                 onClick={() => {
                   changeMarkDownSample(markdownSample1);
                 }}
-                primary="Project Read Me"
-              />
-            </MenuItem>
-            <MenuItem>
-              <ListItemText
-                onClick={() => {
-                  changeMarkDownSample(markdownSample1);
-                }}
                 primary="React Read Me"
               />
             </MenuItem>
@@ -142,6 +138,14 @@ const AppTopBar = ({ editorRef, setInput }) => {
                   changeMarkDownSample(markdownSample2);
                 }}
                 primary="Sample Markdown"
+              />
+            </MenuItem>
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  changeMarkDownSample(markdownSample3);
+                }}
+                primary="Project Read Me"
               />
             </MenuItem>
           </Menu>

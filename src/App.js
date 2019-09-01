@@ -5,9 +5,10 @@ import Editor from "./components/Editor";
 import Preview from "./components/Preview";
 import AppTopBar from "./components/AppTopBar";
 
+import { markdownSample1 } from "./assets/markdownSamples";
+
 function App() {
-  const defaultInput = "# This is a header\n\nAnd this is a paragraph";
-  const [input, setInput] = useState(defaultInput);
+  const [input, setInput] = useState(markdownSample1);
   const [didScroll, setDidScroll] = useState(false);
   const editorRef = useRef(null);
   const previewRef = useRef(null);
