@@ -21,7 +21,6 @@ function App() {
             ref={editorRef}
             input={input}
             setInput={setInput}
-            previewRef={previewRef}
             didScroll={didScroll}
             setDidScroll={setDidScroll}
           />

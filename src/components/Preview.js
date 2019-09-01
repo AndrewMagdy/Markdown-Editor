@@ -16,6 +16,8 @@ const Preview = React.forwardRef(
   ({ input, editorRef, didScroll, setDidScroll }, ref) => {
     const classes = useStyles();
 
+    // TODO add maping data structure to improve performance
+    // Data structure should be constructed in handle Change and used in handleScroll
     const handleScroll = debounce(e => {
       if (didScroll) {
         setDidScroll(false);
