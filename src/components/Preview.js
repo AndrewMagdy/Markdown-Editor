@@ -13,32 +13,36 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Preview = React.forwardRef(
-  ({ input, editorRef, didScroll, setDidScroll }, ref) => {
+  ({ input, editorRef, didScroll, setDidScroll, handleScroll }, ref) => {
     const classes = useStyles();
 
     // TODO add maping data structure to improve performance
     // Data structure should be constructed in handle Change and used in handleScroll
-    const handleScroll = debounce(e => {
-      if (didScroll) {
-        setDidScroll(false);
-        return;
-      }
-      const allNodes = document.querySelectorAll("[data-sourcepos]");
-      for (const node of allNodes) {
-        if (node.offsetTop > ref.current.scrollTop + ref.current.offsetTop) {
-          const sourcePosStr = node.getAttribute("data-sourcepos");
-          const { startLineNum } = parseSourcePos(sourcePosStr);
+    // const handleScroll = debounce(e => {
+    //   if (didScroll) {
+    //     setDidScroll(false);
+    //     return;
+    //   }
+    //   const allNodes = document.querySelectorAll("[data-sourcepos]");
+    //   for (const node of allNodes) {
+    //     if (node.offsetTop > ref.current.scrollTop + ref.current.offsetTop) {
+    //       const sourcePosStr = node.getAttribute("data-sourcepos");
+    //       const { startLineNum } = parseSourcePos(sourcePosStr);
 
-          editorRef.current.editor.scrollToLine(startLineNum - 1, false, true);
-          setDidScroll(true);
-          break;
-        }
-      }
-    }, 500);
+    //       editorRef.current.editor.scrollToLine(startLineNum - 1, false, true);
+    //       setDidScroll(true);
+    //       break;
+    //     }
+    //   }
+    // }, 500);
 
     return (
       <React.Fragment>
-        <div className={classes.container} ref={ref} onScroll={handleScroll}>
+        <div
+          className={classes.container}
+          ref={ref}
+          onScroll={() => handleScroll(1)}
+        >
           <ReactMarkdown
             source={input}
             sourcePos
